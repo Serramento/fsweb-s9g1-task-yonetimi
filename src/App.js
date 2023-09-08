@@ -5,6 +5,7 @@ import TaskForm from "./TaskForm";
 import TaskHookForm from "./TaskHookForm";
 import PeopleForm from "./PeopleForm";
 import { initialTasks, initialTeam } from "./data";
+import { toast } from 'react-toastify';
 
 
 function App() {
@@ -13,14 +14,24 @@ function App() {
 
   function handleTaskSubmit(yeniTask) {
     setTasks([yeniTask, ...tasks])
+    toast.success("Yeni task oluşturuldu.")
   }
 
   function handlePeopleSubmit(yeniKisi) {
     setTeam([...team, yeniKisi])
+    toast.success("Yeni kişi oluşturuldu.")
   }
 
   function handleComplete(id) {
-    console.log("tamamlama fonksiyonunu buraya yazın")
+    const updatedTask = tasks.map((task) => {
+      if(task.id === id) {
+        return {...task, status: "yapıldı"}
+      } else {
+        return task;
+      }
+    })
+    setTasks(updatedTask);
+    toast.success(`${id} id'li görev tamamlandı.`)
   }
 
   return (
